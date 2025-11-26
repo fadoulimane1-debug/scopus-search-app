@@ -1,5 +1,6 @@
 package com.scopus.service;
 
+import com.scopus.config.ApiConfig;
 import com.scopus.model.Article;
 import com.scopus.model.Author;
 import com.scopus.model.SearchResult;
@@ -19,7 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ScopusApiService {
 
-    private CloseableHttpClient httpClient;
+    private final CloseableHttpClient httpClient;
 
     public ScopusApiService() {
         this.httpClient = HttpClients.createDefault();
@@ -37,7 +38,8 @@ public class ScopusApiService {
         result.setQuery(authorName);
 
         // Encoder le nom de l'auteur pour l'URL
-        String encodedAuthor = URLEncoder.encode(authorName, StandardCharsets.UTF_8.toString());
+        // ERREUR 1 CORRIGÉE : Suppression de .toString() - StandardCharsets.UTF_8 est déjà un Charset
+        String encodedAuthor = URLEncoder.encode(authorName, StandardCharsets.UTF_8);
 
         // Construire l'URL de recherche
         String url = ApiConfig.BASE_URL +
@@ -80,13 +82,17 @@ public class ScopusApiService {
         }
 
         // Obtenir le nombre total de résultats
-        String totalResultsStr = searchResults.get("opensearch:totalResults").getAsString();
-        result.setTotalResults(Integer.parseInt(totalResultsStr));
+        // ERREUR 2 CORRIGÉE : Vérification si l'élément existe avant de l'accéder
+        if (searchResults.has("opensearch:totalResults")) {
+            String totalResultsStr = searchResults.get("opensearch:totalResults").getAsString();
+            result.setTotalResults(Integer.parseInt(totalResultsStr));
+        }
 
         // Obtenir les entrées (articles)
         JsonArray entries = searchResults.getAsJsonArray("entry");
 
-        if (entries == null || entries.size() == 0) {
+        // ERREUR 3 CORRIGÉE : Utilisation de isEmpty() au lieu de size() == 0
+        if (entries == null || entries.isEmpty()) {
             return;
         }
 
@@ -134,7 +140,9 @@ public class ScopusApiService {
 
             // Nombre de citations
             if (entry.has("citedby-count")) {
-                article.setCitationCount(entry.get("citedby-count").getAsInt());
+                // ERREUR 4 CORRIGÉE : Gestion du type String pour citedby-count
+                String citationStr = entry.get("citedby-count").getAsString();
+                article.setCitationCount(Integer.parseInt(citationStr));
             }
 
             // Auteur(s)
@@ -149,6 +157,7 @@ public class ScopusApiService {
 
         } catch (Exception e) {
             System.err.println("Error parsing article: " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

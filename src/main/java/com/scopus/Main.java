@@ -1,5 +1,6 @@
 package com.scopus;
 
+import com.scopus.config.ApiConfig;
 import com.scopus.controller.MainController;
 
 public class Main {
@@ -15,8 +16,8 @@ public class Main {
             System.err.println();
             System.err.println("Veuillez suivre ces étapes:");
             System.err.println("1. Obtenez une clé API sur: https://dev.elsevier.com/");
-            System.err.println("2. Ouvrez le fichier: src/main/java/com/scopus/util/ApiConfig.java");
-            System.err.println("3. Remplacez 'VOTRE_CLE_API_ICI' par votre vraie clé API");
+            System.err.println("2. Ouvrez le fichier: src/main/java/com/scopus/config/ApiConfig.java");
+            System.err.println("3. Remplacez 'VOTRE_CLE_API_ICI' par votre clé API");
             System.err.println("4. Recompilez et relancez l'application");
             System.err.println();
             return;
