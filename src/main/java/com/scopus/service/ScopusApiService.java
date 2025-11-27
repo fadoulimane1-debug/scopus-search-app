@@ -1,6 +1,6 @@
 package com.scopus.service;
 
-import com.scopus.config.ApiConfig;
+import com.scopus.util.ApiConfig;
 import com.scopus.model.Article;
 import com.scopus.model.Author;
 import com.scopus.model.SearchResult;
