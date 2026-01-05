@@ -31,8 +31,6 @@ Application Java pour rechercher des articles scientifiques par nom d'auteur dan
 ## 👤 Auteur
 
 Fadoul Imane Amira dolf Aicha el mahdaoui
+
 Génie informatique
 
-## 📅 Dernière mise à jour
-
-Novembre 2025
