@@ -54,5 +54,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# API Keys (IMPORTANT!)
-**/ApiConfig.java
+# Local secrets
+.env
+*.local

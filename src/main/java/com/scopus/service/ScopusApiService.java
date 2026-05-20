@@ -31,7 +31,7 @@ public class ScopusApiService {
      */
     public SearchResult searchByAuthorName(String authorName) throws IOException {
         if (!ApiConfig.isConfigured()) {
-            throw new IllegalStateException("API Key not configured! Please set your API key in ApiConfig.java");
+            throw new IllegalStateException("API Key not configured! Please set the " + ApiConfig.API_KEY_ENV + " environment variable.");
         }
 
         SearchResult result = new SearchResult();
@@ -44,11 +44,10 @@ public class ScopusApiService {
         // Construire l'URL de recherche
         String url = ApiConfig.BASE_URL +
                 "?query=AUTHOR-NAME(" + encodedAuthor + ")" +
-                "&apiKey=" + ApiConfig.API_KEY +
+                "&apiKey=" + ApiConfig.getApiKey() +
                 "&count=" + ApiConfig.RESULTS_PER_PAGE;
 
         System.out.println("Searching for author: " + authorName);
-        System.out.println("URL: " + url);
 
         // Créer et exécuter la requête
         HttpGet request = new HttpGet(url);
