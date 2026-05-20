@@ -21,6 +21,16 @@ Application Java pour rechercher des articles scientifiques par nom d'auteur dan
 
 🔄 **En cours de développement**
 
+## ▶️ Lancement
+
+Avant de lancer l'application, configurez votre clé API SCOPUS dans une variable d'environnement:
+
+```bash
+export SCOPUS_API_KEY="votre_cle_api"
+mvn package
+java -jar target/scopus-search-app-1.0-SNAPSHOT.jar
+```
+
 ### Prochaines étapes:
 - [ ] Configuration de la structure Maven
 - [ ] Création des modèles de données
